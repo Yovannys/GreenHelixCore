@@ -1,0 +1,47 @@
+# Configuracion de la base de datos  driverClassName
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost/dbgrassvsmower
+    username: root
+    password: root
+
+#    url: jdbc:mysql://us-cdbr-iron-east-05.cleardb.net/ad_68884210781770a
+#    username: b64b809905183a
+#    password: b70412b0
+#    Hibernate ddl auto (create, create-drop, validate, update)
+  jpa:
+    show-sql: true
+    database: MYSQL
+    hibernate:
+      ddl-auto: update
+      naming:
+        strategy: org.hibernate.cfg.ImprovedNamingStrategy
+           
+  # Enabled Spring loaded
+  thymeleaf:
+    cache: false
+   
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: juanc0344@gmail.com  
+    password: juanc0344.*         
+    protocol: smtp
+    tls: true
+    properties.mail.smtp:
+        auth: true
+        starttls.enable: true
+        ssl.trust: smtp.gmail.com
+        
+  http:
+   multipart:
+    max-file-size: 500KB
+    max-request-size: 500KB           
+
+# Allow load images for http header
+server:
+  max-http-header-size: 10000000
+  
+    
+
