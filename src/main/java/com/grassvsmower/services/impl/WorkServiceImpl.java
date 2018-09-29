@@ -5,6 +5,12 @@
  */
 package com.grassvsmower.services.impl;
 
+import java.sql.Blob;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -30,6 +36,8 @@ import com.grassvsmower.repository.WorkRepository;
 import com.grassvsmower.services.ProfileService;
 import com.grassvsmower.services.UserService;
 import com.grassvsmower.services.WorkService;
+import com.grassvsmower.utils.Utils;
+import com.grassvsmower.wrappers.WorkWrapperHome;
 
 /**
  *
@@ -57,6 +65,10 @@ public class WorkServiceImpl implements WorkService{
     @Autowired
     @Qualifier("userServiceImpl")
     private UserService userService;
+    
+    @Autowired
+    @Qualifier("utils")
+    private Utils utils;
    
     
     @Override
@@ -127,6 +139,35 @@ public class WorkServiceImpl implements WorkService{
 		return retval;
 	}
 	
+	
+	public boolean onValidateShowHome(long idprof) {
+		boolean retval = false;
+		
+		 User usr = userService.findById(idprof);
+		 
+		 if (usr!=null) {
+			 
+			 List<Works> workList = workRepository.findAllByProfile(usr.getProfile());
+				if (workList!=null && !workList.isEmpty()) {
+					
+					if (ifAllShowHomeisFalse(workList.get(0))) {
+						
+						Works workToSave = findById(workList.get(0).getId());
+						workToSave.setShowHomePage(true);
+						
+						Works ws = workRepository.save(workToSave);
+						if (ws!=null) {
+							retval = true;
+						}
+					}
+					
+				}
+			 
+		 }
+		
+		return retval;
+	}
+	
    public boolean isFullCupsToSetHome (long idProfile) {
 		
 		boolean retval = false;
@@ -143,7 +184,10 @@ public class WorkServiceImpl implements WorkService{
 	    	        @Override
 	    	              public boolean evaluate(Object arg0) {
 	    	        	          Works comp = (Works) arg0;
-	    	                      return (comp.isShowHomePage() );
+	    	        	          
+	    	        	          DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			        	          String strDate = dateFormat.format(comp.getDate());
+			                      return (comp.isShowHomePage() && !strDate.equalsIgnoreCase("3919-01-12") );
 	    	              }
 	    	        });
 	    	      
@@ -159,6 +203,46 @@ public class WorkServiceImpl implements WorkService{
 		
 		return retval;
 	}
+   
+   //
+   
+   public boolean isOnlyExistDefaultWorkWithShowHomeTrue (long idProfile) {
+		
+		boolean retval = false;
+		
+		 User usr = userService.findById(idProfile);
+		
+		if (usr!=null) {
+			List<Works> workList = workRepository.findAllByProfile(usr.getProfile());
+			if (workList!=null && !workList.isEmpty()) {
+				
+				 //Remove all values where showHome is false
+		    	 
+	    	      CollectionUtils.filter(workList, new Predicate() {
+	    	              @Override
+	    	              public boolean evaluate(Object arg0) {
+	    	        	          Works comp = (Works) arg0;
+	    	        	          
+	    	        	          DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			        	          String strDate = dateFormat.format(comp.getDate());
+			                      return (comp.isShowHomePage() && strDate.equalsIgnoreCase("3919-01-12") );
+	    	              }
+	    	        });
+	    	      
+	    	      if (workList!=null && !workList.isEmpty() && workList.size()==1) {
+	    	    	  retval = true;
+	    	      }	else {
+	    	    	  return retval;
+	    	      }		
+					
+			}
+			
+		}
+		
+		return retval;
+	}
+   
+   //
 	
 	private boolean ifAllShowHomeisFalse (Works workParam) {
 		
@@ -312,18 +396,38 @@ public class WorkServiceImpl implements WorkService{
 						
 					}
 					
-					//If at least there is 1 filed with set ShowHome = true
+					//If at least there is 1 file with set ShowHome = true
+															
 					Works rowWithSetHomeTrue = getWorkWithShowHomeTrue (wk);
 					if (rowWithSetHomeTrue!=null) {
-						Works copynigRowBefore = workRepository.findById(rowWithSetHomeTrue.getId());
-						copynigRowBefore.setBeforePhoto(wk.getAfterPhoto());
-						workRepository.save(copynigRowBefore);
 						
-						//Set ShowHomeTrue
+						//previous
+						Works copyingRowBefore = workRepository.findById(rowWithSetHomeTrue.getId());
+						
+						//new one
 						Works rowWithSetHomeTrueToSave = workRepository.findById(wk.getId());
-						rowWithSetHomeTrueToSave.setShowHomePage(true);
-						retval = workRepository.save(rowWithSetHomeTrueToSave);
-						return retval;
+						
+					  if (isOnlyExistDefaultWorkWithShowHomeTrue(wk.getProfile().getId())) {
+						 
+						 //Set default ShowHome false
+						  copyingRowBefore.setShowHomePage(false);
+						  workRepository.save(copyingRowBefore);
+						  
+						 //Set ShowHomeTrue
+						 rowWithSetHomeTrueToSave.setShowHomePage(true);
+						 retval = workRepository.save(rowWithSetHomeTrueToSave);
+						 return retval;
+						
+					  }else {
+						  
+						 copyingRowBefore.setBeforePhoto(rowWithSetHomeTrueToSave.getAfterPhoto());
+						 workRepository.save(copyingRowBefore);
+						 
+						 rowWithSetHomeTrueToSave.setShowHomePage(true);
+						 retval = workRepository.save(rowWithSetHomeTrueToSave);
+						 return retval;
+					  }
+																		
 					}
 					
 				}
@@ -331,6 +435,87 @@ public class WorkServiceImpl implements WorkService{
 		} catch (Exception e) {
 			return retval;
 		}
+		return retval;
+	}
+
+	@Override
+	public List<WorkWrapperHome> findAll(int idprofile) {
+		
+		List<WorkWrapperHome> retval = new ArrayList<WorkWrapperHome>();
+		
+		Long id= new Long(idprofile);
+		
+		User usr = userService.findById(id);		
+		List<Works> workList = usr.getProfile().getWorks();
+		
+		if (workList!=null && !workList.isEmpty()) {
+			for (Works item : workList) {
+			
+				//Setting WorkeWrapper
+				WorkWrapperHome worksWrapperHome = new WorkWrapperHome();
+				
+				if (item.getAfterPhoto()!=null) {
+					Blob photo = item.getAfterPhoto();
+					byte[] byteArr = utils.blobToByte(photo );					
+					String photoString = Base64.getEncoder().withoutPadding().encodeToString(byteArr);
+					worksWrapperHome.setAfterPhoto(photoString );
+				}
+				else {
+					worksWrapperHome.setAfterPhoto(null);
+				}
+					
+				if(item.getBeforePhoto()!=null) {
+					worksWrapperHome.setBeforePhoto(Base64.getEncoder().withoutPadding().encodeToString(utils.blobToByte(item.getBeforePhoto())));
+				}
+				else {
+					worksWrapperHome.setBeforePhoto(null);	
+				}			
+				
+				worksWrapperHome.setDate(item.getDate());
+				worksWrapperHome.setId(item.getId());
+				worksWrapperHome.setShowHomePage(item.isShowHomePage());
+				retval.add(worksWrapperHome);		
+				
+			}
+		}else {
+			return null;
+		}
+		
+		
+		if (!onlyDefaultWorks(retval)) {
+
+			//Remove default work
+			
+		      CollectionUtils.filter(retval, new Predicate() {
+		        @Override
+		              public boolean evaluate(Object arg0) {
+		        	  WorkWrapperHome comp = (WorkWrapperHome) arg0;
+		        	         
+		        	          DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		        	          String strDate = dateFormat.format(comp.getDate());
+		                      return (!strDate.equalsIgnoreCase("3919-01-12") );
+		              }
+		        });
+		}
+		
+		
+		//Order desc
+		Collections.reverse(retval);
+				
+		//WorkWrapperHome[] workWrapperHomeArr = retval.toArray(new WorkWrapperHome[retval.size()]);	
+			
+		return retval;
+		
+		
+	}
+
+	private boolean onlyDefaultWorks(List<WorkWrapperHome> listHome) {
+		boolean retval = false;
+				
+		if (listHome.size()==1) {
+			retval = true;
+		}
+		
 		return retval;
 	}		
     	 

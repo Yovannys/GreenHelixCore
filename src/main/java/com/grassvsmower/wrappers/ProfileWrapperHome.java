@@ -1,5 +1,6 @@
 package com.grassvsmower.wrappers;
 
+import java.util.Date;
 import java.util.List;
 
 public class ProfileWrapperHome {
@@ -23,6 +24,19 @@ public class ProfileWrapperHome {
 	private String uid;
 	
 	private String unscore;
+	
+	private String address;
+	
+	private String signed;
+	
+	private String phone;
+	
+	private String postCount;
+	
+	private boolean setAccessfirstTime;
+	
+	//Temp
+	private String rssLink;
 	
 	public ProfileWrapperHome() {
 		
@@ -119,5 +133,53 @@ public class ProfileWrapperHome {
 	public void setUnscore(String unscore) {
 		this.unscore = unscore;
 	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getSigned() {
+		return signed;
+	}
+
+	public void setSigned(String signed) {
+		this.signed = signed;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getRssLink() {
+		return rssLink;
+	}
+
+	public void setRssLink(String rssLink) {
+		this.rssLink = rssLink;
+	}
+
+	public boolean isSetAccessfirstTime() {
+		return setAccessfirstTime;
+	}
+
+	public void setSetAccessfirstTime(boolean setAccessfirstTime) {
+		this.setAccessfirstTime = setAccessfirstTime;
+	}
+
+	public String getPostCount() {
+		return postCount;
+	}
+
+	public void setPostCount(String postCount) {
+		this.postCount = postCount;
+	}	
 	
 }

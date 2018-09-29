@@ -1,14 +1,10 @@
 package com.grassvsmower.controller;
 
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +18,9 @@ import com.grassvsmower.components.ConstantsURL;
 import com.grassvsmower.components.EntityNotFoundException;
 import com.grassvsmower.components.ProfileConverter;
 import com.grassvsmower.components.WorksConverter;
-import com.grassvsmower.entities.Works;
+import com.grassvsmower.model.PostModel;
 import com.grassvsmower.model.Response;
 import com.grassvsmower.model.UserModel;
-import com.grassvsmower.model.WorksModel;
 import com.grassvsmower.services.UserService;
 import com.grassvsmower.wrappers.HomeWrapper;
 import com.grassvsmower.wrappers.UserWrapperHome;
@@ -88,21 +83,15 @@ public class AuthenticateController {
 	@GetMapping(value=ConstantsURL.GETPROFILESHOME)
     public ResponseEntity<?> getProfileHome(@RequestParam(name="page", required=false, defaultValue="0") int page ){
 		
-		boolean validation = true;
+		
 		HomeWrapper retval = null;
 		
 		if (page < 0) {
-			validation = false;	
+			return new ResponseEntity<HomeWrapper>(retval,HttpStatus.OK); 	
 		}else {
 			 retval = userService.getHomeProfile(page);
-			if (retval==null) {
-				validation = true;
-			}
+				
 		}
-        
-		if (!validation) {
-			return new ResponseEntity<String>("No Content",HttpStatus.NO_CONTENT ); 
-		}  
          
         return new ResponseEntity<HomeWrapper>(retval,HttpStatus.OK);
         
@@ -142,7 +131,7 @@ public class AuthenticateController {
        return new ResponseEntity<UserModel>(retval,HttpStatus.OK);
       
     }
-	
+		
 	@GetMapping(value=ConstantsURL.HELLO)
     public ResponseEntity<?> hello(@PathVariable String name ){
         List<Response> list = new ArrayList<>();

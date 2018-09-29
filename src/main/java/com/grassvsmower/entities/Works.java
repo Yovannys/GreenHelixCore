@@ -28,10 +28,10 @@ public class Works {
 	
 	private Date date;
 	 
-	@PrePersist
-    void preInsert() {
-		showHomePage = false;
-    }
+//	@PrePersist
+//    void preInsert() {
+//		showHomePage = false;
+//    }
 		
 	public Works() {
 		

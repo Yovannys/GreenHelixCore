@@ -59,6 +59,9 @@ public class MailSenderImpl implements MailSender{
     
 }
 
+// ID: green.helix.yt@gmail.com
+// PASS :myBusiness*.2018
+
 //# Gmail account is highly secured. So Email is blocked. The solution is to make the gmail account less secure:
 //#– Login to Gmail.
 //#– Access https://www.google.com/settings/security/lesssecureapps

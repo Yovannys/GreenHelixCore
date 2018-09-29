@@ -12,9 +12,11 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
@@ -94,5 +96,78 @@ public class Utils {
     	
     	 return blobAsBytes;
      } 
+     
+    public boolean badWordFilter(String word) {
+    	boolean retval = false;
+    	List<String> list = new ArrayList<>();
+    	
+    	list.add("pinga");
+    	list.add("cojone");
+    	list.add("fuck");
+    	list.add("joder");
+    	list.add("fana");
+    	list.add("mierda");
+    	list.add("come mierda");
+    	list.add("palestino");
+    	list.add("oriental");
+    	list.add("bajanda");
+    	list.add("singao");
+    	list.add("la madre");
+    	list.add("motherfucker");
+    	list.add("coño");
+    	list.add("son of a bitch");
+    	list.add("hijo de puta");
+    	list.add("berk");
+    	list.add("coward");
+    	list.add("pussy");
+    	list.add("cunt");
+    	list.add("fanny");
+    	list.add("twat");
+    	list.add("canaille");
+    	list.add("twat");
+    	list.add("shit");
+    	list.add("cagada");
+    	list.add("crap");
+    	list.add("poop");
+    	list.add("bullshit");
+    	list.add("muck");
+    	list.add("estupideces");
+    	list.add("estupido");
+    	list.add("estupidez");
+    	list.add("Fuck you");
+    	list.add("Piss off");
+    	list.add("muck");
+    	list.add("Dick head");
+    	list.add("Asshole");
+    	list.add("Damn");
+    	list.add("Cunt");
+    	list.add("bastard");
+    	list.add("darn");
+    	list.add("slut");
+    	list.add("douche");
+    	list.add("stupid");
+    	list.add("idiot");
+    	list.add("homosexual");
+    	list.add("bollo");
+    	
+    	for (String item : list) {
+    		
+    		word = word.toLowerCase();
+    		
+			if (word.contains(item) ) {
+				retval = true;
+				break;
+			}else {
+				word = word.toUpperCase();
+
+				if (word.contains(item) ) {
+					retval = true;
+					break;
+				}
+			}
+		}
+    	
+    	return retval;
+    } 
     
 }

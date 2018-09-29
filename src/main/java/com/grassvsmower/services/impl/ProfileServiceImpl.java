@@ -111,13 +111,30 @@ public class ProfileServiceImpl implements ProfileService{
 			User userSave = userRepository.findById(profileModel.getId());
 			Profile pf = userSave.getProfile();
 			
-			//Updating
-			pf.setDescription(profileModel.getDescription());
-			pf.setAnotherServices(profileModel.getAnotherServices());
-			pf.setTitle(profileModel.getTitle());
+			//Applying Filter
+			String customDescription = profileModel.getDescription().replace("*", "");
+			if (customDescription!=null && !customDescription.equalsIgnoreCase("") && !utils.badWordFilter(customDescription))
+				pf.setDescription(customDescription.trim());
+			else
+				pf.setDescription("My Description");
+			
+			String customServices = profileModel.getAnotherServices().replace("*", "");
+			if (customServices!=null && !customServices.equalsIgnoreCase("") && !utils.badWordFilter(customServices))
+				pf.setAnotherServices(customServices.trim());
+			else
+				pf.setAnotherServices("My Services");
+			
+			String customTitle = profileModel.getTitle().replace("*", "");
+			if(customTitle!=null && !customTitle.equalsIgnoreCase("") && !utils.badWordFilter(customTitle))
+				pf.setTitle(customTitle.trim() );
+			else
+				pf.setTitle("My Title");
+			
 			pf.setLanguage(profileModel.getLanguage());
 			pf.setUrl(profileModel.getUrl());
-			
+			pf.setAddress(profileModel.getAddress());
+			pf.setSigned(profileModel.getSigned());
+			pf.setPhone(profileModel.getPhone());			
 			
 			userSave.setProfile(pf);
 			userSave.setTipoUsuario(2);

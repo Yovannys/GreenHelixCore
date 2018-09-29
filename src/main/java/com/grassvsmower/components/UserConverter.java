@@ -27,6 +27,7 @@ public class UserConverter {
 	        users.setEmail(userModel.getEmail());
 	        users.setEnabled(userModel.isEnabled());
 	        users.setTipoUsuario(userModel.getTipoUsuario());
+	        users.setPicture(userModel.getPicture());
 		  }	        
 	        return users;        
 	    }
@@ -47,6 +48,7 @@ public class UserConverter {
 	        userModel.setEmail(users.getEmail());
 	        userModel.setEnabled(users.isEnabled());
 	        userModel.setTipoUsuario(userModel.getTipoUsuario());
+	        userModel.setPicture(users.getPicture());
 	        
 	        userModel.setProfile(users.getProfile());
 	    	}

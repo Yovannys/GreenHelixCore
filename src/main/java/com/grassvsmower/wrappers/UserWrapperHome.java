@@ -23,6 +23,8 @@ private Long id;
     
     
     private String email;
+    
+    private String picture;
 	
 	
     private int tipoUsuario;
@@ -139,9 +141,14 @@ private Long id;
 		this.tipoUsuario = tipoUsuario;
 	}
 
-   	
-	
-    
-    
+
+	public String getPicture() {
+		return picture;
+	}
+
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}    
 
 }

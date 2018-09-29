@@ -38,11 +38,11 @@ public class Contact {
 	private String email;
 	
 	@NotEmpty(message = "Subject must not be empty")
-	@NotNull(message = "Subject name is a required field")
+	@NotNull(message = "Subject is a required field")
 	private String subject;
 	
 	@NotEmpty(message = "Message must not be empty")
-	@NotNull(message = "Message name is a required field")
+	@NotNull(message = "Message is a required field")
 	private String message;
 	
 	public Contact() {

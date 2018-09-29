@@ -27,6 +27,8 @@ public class UserModel {
 	
 	
     private int tipoUsuario;
+    
+    private String picture;
 
    	
 	private Profile profile;
@@ -103,6 +105,14 @@ public class UserModel {
 
 	public void setTipoUsuario(int tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
 	}	
 	
 	

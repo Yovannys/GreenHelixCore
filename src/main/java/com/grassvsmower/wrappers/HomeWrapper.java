@@ -2,13 +2,16 @@ package com.grassvsmower.wrappers;
 
 import java.util.List;
 
+import com.grassvsmower.model.RssData;
+
 public class HomeWrapper {
 	
 	private long total_elements;
 	private int total_pages;
 	private List<UserWrapperHome>data;
-		
 	
+	
+		
 	public HomeWrapper() {
 		super();
 	}
@@ -30,6 +33,5 @@ public class HomeWrapper {
 	public void setData(List<UserWrapperHome> data) {
 		this.data = data;
 	}
-	
 	
 }

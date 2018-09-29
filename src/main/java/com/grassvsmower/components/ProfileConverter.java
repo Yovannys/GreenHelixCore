@@ -15,16 +15,20 @@ public class ProfileConverter {
 		
 		if (profileModel!=null) {
 		
-		retval = new Profile();
-		retval.setId(profileModel.getId());
-		retval.setLanguage(profileModel.getLanguage());
-		retval.setTitle(profileModel.getTitle());
-		retval.setUrl(profileModel.getUrl());
-		retval.setAnotherServices(profileModel.getAnotherServices());
-		retval.setDescription(profileModel.getDescription());
-		retval.setScore(profileModel.getScore());
-		retval.setUid(profileModel.getUid());
-		retval.setUnscore(profileModel.getUnscore());
+			retval = new Profile();
+			retval.setId(profileModel.getId());
+			retval.setLanguage(profileModel.getLanguage());
+			retval.setTitle(profileModel.getTitle());
+			retval.setUrl(profileModel.getUrl());
+			retval.setAnotherServices(profileModel.getAnotherServices());
+			retval.setDescription(profileModel.getDescription());
+			retval.setScore(profileModel.getScore());
+			retval.setUid(profileModel.getUid());
+			retval.setUnscore(profileModel.getUnscore());
+			retval.setAddress(profileModel.getAddress());
+			retval.setSigned(profileModel.getSigned());
+			retval.setPhone(profileModel.getPhone());
+			retval.setPostCount(profileModel.getPostCount());
 		}
 		return retval;
 	}
@@ -45,6 +49,10 @@ public class ProfileConverter {
 			retval.setScore(profile.getScore());
 			retval.setScore(profile.getUid());
 			retval.setUnscore(profile.getUnscore());
+			retval.setUnscore(profile.getAddress());
+			retval.setSigned(profile.getSigned());
+			retval.setPhone(profile.getPhone());
+			retval.setPostCount(profile.getPostCount());
 		
     	}
 		return retval;

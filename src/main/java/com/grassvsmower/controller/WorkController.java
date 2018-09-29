@@ -1,5 +1,7 @@
 package com.grassvsmower.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import com.grassvsmower.entities.Works;
 import com.grassvsmower.services.ProfileService;
 import com.grassvsmower.services.UserService;
 import com.grassvsmower.services.impl.WorkServiceImpl;
+import com.grassvsmower.wrappers.WorkWrapperHome;
 
 @RestController
 public class WorkController {
@@ -69,6 +72,27 @@ public class WorkController {
 		
 		 boolean retval = workServiceImpl.isFullCupsToSetHome(idw);
 		 return new ResponseEntity<Boolean>(retval,HttpStatus.OK);
+		
+    }
+	
+	@GetMapping(value=ConstantsURL.VALIDATESHOWHOME)
+    public ResponseEntity<?> onValidateShowHome (@RequestParam(name="idprofile",required=false, defaultValue="null") String id){
+		
+		if (!userService.checkToken())
+	     return new ResponseEntity<String>("Unauthorized",HttpStatus.OK );
+		
+		long idprof = Long.valueOf(id);
+		 boolean retval = workServiceImpl.onValidateShowHome(idprof);
+		 return new ResponseEntity<Boolean>(retval,HttpStatus.OK);
+		
+    }
+	
+	
+	@GetMapping(value=ConstantsURL.FINDALL)
+    public ResponseEntity<?> findAll (@RequestParam(name="idprofile",required=false, defaultValue="null") int idprofile){
+		
+		List<WorkWrapperHome> retval = workServiceImpl.findAll(idprofile);
+		 return new ResponseEntity<List<WorkWrapperHome>>(retval,HttpStatus.OK);
 		
     }
 

@@ -1,7 +1,10 @@
 package com.grassvsmower.entities;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,7 +44,7 @@ public class Profile {
 	
 	private String language;
 	
-	@NotNull(message = "Description Name is a required field")
+ 	@NotNull(message = "Description is a required field")
 	private String description;
 	
 	private String anotherServices;
@@ -50,7 +53,19 @@ public class Profile {
 	
 	private String unscore;
 	
+	private String postCount;
+	
 	private String uid;
+	
+	private String signed;
+	
+	private String phone;
+	
+	private boolean accessfirstTime = false;
+	
+	@NotNull(message = "Address is a required field")
+	@Pattern(message = "Invalid Title", regexp = "[a-zA-Z0-9,.-_ ]+")
+	private String address;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
@@ -61,11 +76,20 @@ public class Profile {
 	@JsonIgnore
 	private List<Works> works = new ArrayList<Works>();
 	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="profile")  
+	@JsonIgnore
+	private Set<Comment> comment = new HashSet<Comment>();
+	
 	
 	@PrePersist
     void preInsert() {
+		if (language==null)
 		language = "en_US";
+		
+		if (score==null)
 		score = Integer.toString(0);
+		
+		if (unscore==null)
 		unscore = Integer.toString(0);
     }
 	
@@ -170,6 +194,54 @@ public class Profile {
 
 	public void setUnscore(String unscore) {
 		this.unscore = unscore;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getSigned() {
+		return signed;
+	}
+
+	public void setSigned(String signed) {
+		this.signed = signed;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public boolean isAccessfirstTime() {
+		return accessfirstTime;
+	}
+
+	public void setAccessfirstTime(boolean accessfirstTime) {
+		this.accessfirstTime = accessfirstTime;
+	}
+
+	public Set<Comment> getComment() {
+		return comment;
+	}
+
+	public void setComment(Set<Comment> comment) {
+		this.comment = comment;
+	}
+
+	public String getPostCount() {
+		return postCount;
+	}
+
+	public void setPostCount(String postCount) {
+		this.postCount = postCount;
 	}	
 	
 }

@@ -16,6 +16,15 @@ public class ConstantsURL {
 	
 	public final static String SENDCONTACT = "/api/contact/sendContact";
 	
+	public final static String SENDREQUESTSERVICES = "/api/requestServices/sendRequestServices";
+	
+	
+	//Post
+	
+	public final static String GETALLPOSTS = "/api/users/getAllPost";
+	
+	public final static String SENDPOST = "/api/post/sendPost";
+		
 	//Profile
 	
 	public final static String ADDWORKS = "/api/profile/addworks";
@@ -24,6 +33,8 @@ public class ConstantsURL {
 	
 	public final static String GETWORKSBYUSERNAME = "/api/profile/getWorks";
 	
+	public final static String FINDALL = "/api/profile/works/findAll";
+	
 	public final static String UPLOADWORKS = "/api/profile/works/upload";
 	
 	public final static String DELETEWORKBYID = "/api/profile/works/delete";
@@ -31,6 +42,8 @@ public class ConstantsURL {
 	public final static String SETHOME = "/api/profile/works/setHome";
 	
 	public final static String ISFULLCUP = "/api/profile/works/isFullCup";
+	
+	public final static String VALIDATESHOWHOME = "/api/profile/works/validateShowHome";	
 	
 	public final static String SETLIKE = "/api/profile/setLike";
 	

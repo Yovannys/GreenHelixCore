@@ -1,5 +1,8 @@
 # Configuracion de la base de datos  driverClassName
 spring:
+  resources:
+    static-locations: classpath:/static/
+    
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost/dbgrassvsmower
@@ -25,8 +28,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: juanc0344@gmail.com  
-    password: juanc0344.*         
+    username: green.helix.yt@gmail.com  
+    password: myBusiness*.2018         
     protocol: smtp
     tls: true
     properties.mail.smtp:

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import com.grassvsmower.entities.User;
+import com.grassvsmower.model.PostModel;
 import com.grassvsmower.model.ProfileModel;
 import com.grassvsmower.model.UserModel;
 import com.grassvsmower.model.WorksModel;
@@ -26,6 +27,12 @@ public interface UserService {
     public UserModel getProfile (UserModel usermodel) ;
     
     public UserModel findByUsername(String username);
+    
+    public List<PostModel> getAllPost(Long profileId);
+    
+    public int getCountPost(Long profileId);
+    
+    public PostModel sentPost(PostModel postModel);
 
 	public String getToken();
 	

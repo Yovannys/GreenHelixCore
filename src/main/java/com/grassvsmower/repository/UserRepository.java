@@ -29,7 +29,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	    public List<User> findAll();
 	    public User findById(Long id);
 	    
-	    @Query("SELECT u FROM User u WHERE (u.profile.title LIKE %:crit% ) OR (u.profile.description like %:crit%) ")
+	    @Query("SELECT u FROM User u WHERE (u.profile.title LIKE %:crit% ) OR (u.profile.description like %:crit%) OR (u.profile.anotherServices like %:crit%) OR (u.profile.address like %:crit%)")
 	    List<User> findByCriteriaContaining(@Param("crit") String crit);
 	     
 }

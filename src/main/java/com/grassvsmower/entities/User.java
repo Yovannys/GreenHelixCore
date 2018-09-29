@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -42,6 +43,15 @@ public class User {
 	private Profile profile;
 		                          
 	private int tipoUsuario;
+	
+	private String picture;
+	
+	@PrePersist
+    void preInsert() {
+		if (picture==null)
+		picture = null;
+		tipoUsuario = 2;
+    }
 	
     public User() {
 		
@@ -119,7 +129,14 @@ public class User {
 
 	public void setTipoUsuario(int tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;
-	}	
-	
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}		
 	
 }

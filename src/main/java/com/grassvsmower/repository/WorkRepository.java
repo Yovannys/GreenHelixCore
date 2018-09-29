@@ -24,6 +24,9 @@ public interface WorkRepository extends JpaRepository<Works, Long>{
 
 	public List<Works> findAllByProfile(Profile profile);
 	
-	public Works findById(Long id);		
+	public Works findById(Long id);	
+	
+	
+	public List<Works> findAll();
 	
 }

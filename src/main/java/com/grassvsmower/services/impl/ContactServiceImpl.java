@@ -37,15 +37,14 @@ public class ContactServiceImpl implements ContactService {
 		 ContactModel retval = contactConverter.contact2contactModel(contact);
 		 
 		 // Check this function
-		 //sendEmail(contactModel);
+		 sendEmail(contactModel);
 		 return retval;
 	}
 	
 	 public void sendEmail(ContactModel contactModel){
-        
-		UserModel user = userServiceImpl.getUsernameByToken();
-        String from = user.getEmail();
-		String subject = "New Service Request";
+        		
+        String from = contactModel.getEmail();
+		String subject = "Some user is contacting us";
         String body = "<strong>NAME: </strong>"+contactModel.getFirstname()+ " "+contactModel.getLastname()+" <br> "
         		    + "<strong>PHONE:  </strong>"+ contactModel.getPhone()+" <br>"
         		    + "<strong>EMAIL:  </strong>"+from+" <br>"
@@ -53,7 +52,7 @@ public class ContactServiceImpl implements ContactService {
                     + "<strong>MESSAGE:  </strong>"+contactModel.getMessage();
        
         //Rel from : grassvsmower@gmail.com
-        mailSender.send(from, "yovanotti2004@gmail.com", subject, body, true); 
+        mailSender.send(from, "green.helix.yt@gmail.com", subject, body, true); 
         
     }
 

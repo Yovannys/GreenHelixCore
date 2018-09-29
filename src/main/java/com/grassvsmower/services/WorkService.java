@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.grassvsmower.entities.Profile;
 import com.grassvsmower.entities.Works;
+import com.grassvsmower.wrappers.WorkWrapperHome;
 
 public interface WorkService {
 	
@@ -18,5 +19,7 @@ public interface WorkService {
 	public Works setHome(Long id);
 	
 	public boolean isFullCupsToSetHome (long id);
+	
+	public List<WorkWrapperHome> findAll(int idprofile);
 	
 }

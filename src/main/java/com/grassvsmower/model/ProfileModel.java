@@ -1,5 +1,7 @@
 package com.grassvsmower.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -29,6 +31,14 @@ public class ProfileModel {
 	private String uid;
 	
 	private String unscore;
+	
+	private String postCount;
+	
+	private String address;
+	
+	private String signed;
+	
+	private String phone;
 	               
 	
 	public ProfileModel() {
@@ -106,6 +116,38 @@ public class ProfileModel {
 
 	public void setUnscore(String unscore) {
 		this.unscore = unscore;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getSigned() {
+		return signed;
+	}
+
+	public void setSigned(String signed) {
+		this.signed = signed;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getPostCount() {
+		return postCount;
+	}
+
+	public void setPostCount(String postCount) {
+		this.postCount = postCount;
 	}	
 
 }
